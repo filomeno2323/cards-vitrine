@@ -46,6 +46,8 @@ border-radius:6px;font-size:15px}
 .est{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;
 background:var(--acc);color:var(--accfg)}
 .est.res,.est.vend{background:var(--res);color:#fff}
+.qtd{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--acc);
+color:var(--acc)}
 .info h2{font-size:17px;margin:0;font-weight:700}
 .info .num{color:var(--mut);font-weight:600;font-size:14px}
 .set{margin:0;font-size:13px;color:var(--mut)}
@@ -96,7 +98,7 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
 <body>
 <header>
   <h1>Cartas à venda</h1>
-  <p class="sub"><span id="conta">3</span> disponíveis ·
+  <p class="sub"><span id="conta">2</span> disponíveis ·
      atualizado em 12/10/2026</p>
 </header>
 
@@ -118,29 +120,13 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
     </div>
     <div class="info">
       <div class="l1"><span class="cod">V01</span>
+        <span class="qtd">2 disponíveis</span>
         <span class="est ">Disponível</span></div>
       <h2>Rhamondre Stevenson <span class="num">141</span></h2>
       <p class="set">2026 Topps Flagship Football</p>
       
       <div class="l2"><strong class="preco">R$ 300</strong>
         <span class="bts"><button class="add" data-add="V01" aria-pressed="false">adicionar</button><a class="quero" href="https://wa.me/5511982821912?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20carta%20V01%20Rhamondre%20Stevenson%20141" target="_blank" rel="noopener">Quero esta</a></span></div>
-    </div>
-  </article>
-  <article class="c " data-esp="NFL" data-set="2026 Topps Flagship Football"
-           data-cod="V02" data-preco="300" data-busca="rhamondre stevenson 2026 topps flagship football  141  v02">
-    <div class="foto" tabindex="0" role="button" aria-label="ver o verso">
-      <img class="fr" src="fotos/V02_f.jpg" width="458" height="640" loading="lazy" decoding="async" alt="Rhamondre Stevenson V02"><img class="vs" src="fotos/V02_v.jpg" width="640" height="458" loading="lazy" decoding="async" alt="verso de V02">
-      
-      <span class="lupa">verso</span>
-    </div>
-    <div class="info">
-      <div class="l1"><span class="cod">V02</span>
-        <span class="est ">Disponível</span></div>
-      <h2>Rhamondre Stevenson <span class="num">141</span></h2>
-      <p class="set">2026 Topps Flagship Football</p>
-      
-      <div class="l2"><strong class="preco">R$ 300</strong>
-        <span class="bts"><button class="add" data-add="V02" aria-pressed="false">adicionar</button><a class="quero" href="https://wa.me/5511982821912?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20carta%20V02%20Rhamondre%20Stevenson%20141" target="_blank" rel="noopener">Quero esta</a></span></div>
     </div>
   </article>
   <article class="c " data-esp="NFL" data-set="2026 Topps Flagship Football"
@@ -152,6 +138,7 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
     </div>
     <div class="info">
       <div class="l1"><span class="cod">V03</span>
+        
         <span class="est ">Disponível</span></div>
       <h2>David Bailey <span class="num">91FRA-DBA</span></h2>
       <p class="set">2026 Topps Flagship Football</p>
@@ -164,6 +151,7 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
 </main>
 
 <footer>
+  <p><strong>Frete Correios:</strong> R$ 19,99 até 30 cartas · R$ 29,99 de 31 a 100 · R$ 49,99 acima de 100.</p>
   <p>Atualizado em 12/10/2026. Preços em reais e podem mudar sem aviso; a carta é de
      quem fechar primeiro.</p>
   <p>Toque na foto para ver o verso. Toque em <strong>adicionar</strong> para juntar várias
@@ -177,7 +165,7 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
   <button class="quero" id="enviar">Enviar pedido<span class='amplo'> no WhatsApp</span></button>
 </div>
 
-<script type="application/json" id="dados">[{"cod": "V01", "rot": "V01 Rhamondre Stevenson #141", "preco": 300}, {"cod": "V02", "rot": "V02 Rhamondre Stevenson #141", "preco": 300}, {"cod": "V03", "rot": "V03 David Bailey #91FRA-DBA", "preco": 600}]</script>
+<script type="application/json" id="dados">[{"cod": "V01", "rot": "V01 Rhamondre Stevenson #141", "preco": 300}, {"cod": "V03", "rot": "V03 David Bailey #91FRA-DBA", "preco": 600}]</script>
 
 <script>
 (function () {
@@ -186,6 +174,13 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
   var q = document.getElementById("q");
   var NUMERO = "5511982821912";
   var ITENS = JSON.parse(document.getElementById("dados").textContent);
+  var FAIXAS = [{"ate": 30, "brl": 19.99, "rotulo": "até 30 cartas"}, {"ate": 100, "brl": 29.99, "rotulo": "de 31 a 100"}, {"ate": null, "brl": 49.99, "rotulo": "acima de 100"}];
+  function frete(n) {
+    for (var i = 0; i < FAIXAS.length; i++) {
+      if (FAIXAS[i].ate === null || n <= Number(FAIXAS[i].ate)) return Number(FAIXAS[i].brl) || 0;
+    }
+    return FAIXAS.length ? Number(FAIXAS[FAIXAS.length - 1].brl) || 0 : 0;
+  }
   var POR = {}; ITENS.forEach(function (x) { POR[x.cod] = x; });
   var CHAVE = "vitrine_pedido";
   var sel = ler();
@@ -231,8 +226,10 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
        verdade partiria o literal do JavaScript ao meio. Foi o que aconteceu na primeira
        geracao - "Uncaught SyntaxError: Invalid or unexpected token" e a pagina inteira
        morta, com os botoes sem reagir. */
+    var fr = FAIXAS.length ? frete(sel.length) : 0;
     return "Olá! Tenho interesse nestas cartas:\n" + linhas.join("\n")
-      + "\nTotal: " + brl(total);
+      + "\nTotal: " + brl(total)
+      + (FAIXAS.length ? "\nFrete estimado: R$ " + fr.toFixed(2).replace(".", ",") : "");
   }
 
   /* Virar a foto: delegado no documento, para funcionar em carta que o filtro escondeu e
