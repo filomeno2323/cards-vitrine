@@ -50,11 +50,42 @@ background:var(--acc);color:var(--accfg)}
 .info .num{color:var(--mut);font-weight:600;font-size:14px}
 .set{margin:0;font-size:13px;color:var(--mut)}
 .det{margin:0;font-size:13px}
-.l2{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px}
+.l2{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px;
+flex-wrap:wrap}
 .preco{font-size:20px}
+.bts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .quero{background:var(--acc);color:var(--accfg);border:0;border-radius:999px;padding:10px 16px;
 font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;display:inline-block}
+.add{background:transparent;color:var(--acc);border:1px solid var(--acc);border-radius:999px;
+padding:9px 14px;font-size:15px;font-weight:700;cursor:pointer;
+-webkit-tap-highlight-color:transparent}
+.c.sel{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc)}
+.c.sel .add{background:var(--acc);color:var(--accfg)}
 .jaera{color:var(--res);font-size:13px;font-weight:600}
+/* barra do pedido: so aparece com carta escolhida. O padding de baixo do body cresce junto
+   (classe comBarra) - sem isso ela cobre o ultimo cartao no celular, que foi o primeiro
+   defeito que apareceu no teste de 375px. */
+.barra{position:fixed;left:0;right:0;bottom:0;background:var(--cd);border-top:1px solid var(--ln);
+display:flex;align-items:center;gap:10px;z-index:40;box-shadow:0 -2px 14px rgba(0,0,0,.14);
+padding:12px calc(env(safe-area-inset-right,0px) + 14px)
+        calc(env(safe-area-inset-bottom,0px) + 12px) calc(env(safe-area-inset-left,0px) + 14px)}
+.barra[hidden]{display:none}
+/* flex:1 1 110px e min-width: com flex:1 e min-width:0 o botao verde (232px num iPhone de
+   375) espremia o texto ate 34px, e "1 carta / R$ 300" virava uma coluna de letras. */
+.barra .txt{flex:1 1 110px;min-width:96px;font-size:13px;line-height:1.25}
+.barra .quero{flex:0 1 auto;white-space:nowrap}
+/* Em tela estreita o rotulo vira so "Enviar pedido": com o texto inteiro o botao ficava
+   211px num viewport de 375 e o "WhatsApp" saia cortado pela borda. Rotulo truncado e pior
+   que rotulo curto. */
+@media (max-width:420px){
+  .barra .quero{padding:10px 12px;font-size:14px}
+  .barra .limpa{padding:8px 10px}
+  .barra .amplo{display:none}
+}
+.barra .tot{display:block;font-size:18px;font-weight:800}
+.barra .limpa{background:transparent;color:var(--mut);border:1px solid var(--ln);
+border-radius:999px;padding:9px 12px;font-size:13px;cursor:pointer}
+body.comBarra{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 104px)}
 .vazio{color:var(--mut);padding:30px 0;text-align:center;grid-column:1/-1}
 footer{color:var(--mut);font-size:13px;border-top:1px solid var(--ln);margin-top:26px;
 padding-top:14px}
@@ -79,7 +110,7 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
 
 <main id="lista">
   <article class="c " data-esp="NFL" data-set="2026 Topps Flagship Football"
-           data-preco="300" data-busca="rhamondre stevenson 2026 topps flagship football  141  v01">
+           data-cod="V01" data-preco="300" data-busca="rhamondre stevenson 2026 topps flagship football  141  v01">
     <div class="foto" tabindex="0" role="button" aria-label="ver o verso">
       <img class="fr" src="fotos/V01_f.jpg" width="458" height="640" loading="lazy" decoding="async" alt="Rhamondre Stevenson V01"><img class="vs" src="fotos/V01_v.jpg" width="640" height="461" loading="lazy" decoding="async" alt="verso de V01">
       
@@ -92,11 +123,11 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
       <p class="set">2026 Topps Flagship Football</p>
       
       <div class="l2"><strong class="preco">R$ 300</strong>
-        <a class="quero" href="https://wa.me/5511982821912?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20carta%20V01%20Rhamondre%20Stevenson%20141" target="_blank" rel="noopener">Quero esta</a></div>
+        <span class="bts"><button class="add" data-add="V01" aria-pressed="false">adicionar</button><a class="quero" href="https://wa.me/5511982821912?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20carta%20V01%20Rhamondre%20Stevenson%20141" target="_blank" rel="noopener">Quero esta</a></span></div>
     </div>
   </article>
   <article class="c " data-esp="NFL" data-set="2026 Topps Flagship Football"
-           data-preco="300" data-busca="rhamondre stevenson 2026 topps flagship football  141  v02">
+           data-cod="V02" data-preco="300" data-busca="rhamondre stevenson 2026 topps flagship football  141  v02">
     <div class="foto" tabindex="0" role="button" aria-label="ver o verso">
       <img class="fr" src="fotos/V02_f.jpg" width="458" height="640" loading="lazy" decoding="async" alt="Rhamondre Stevenson V02"><img class="vs" src="fotos/V02_v.jpg" width="640" height="458" loading="lazy" decoding="async" alt="verso de V02">
       
@@ -109,11 +140,11 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
       <p class="set">2026 Topps Flagship Football</p>
       
       <div class="l2"><strong class="preco">R$ 300</strong>
-        <a class="quero" href="https://wa.me/5511982821912?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20carta%20V02%20Rhamondre%20Stevenson%20141" target="_blank" rel="noopener">Quero esta</a></div>
+        <span class="bts"><button class="add" data-add="V02" aria-pressed="false">adicionar</button><a class="quero" href="https://wa.me/5511982821912?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20carta%20V02%20Rhamondre%20Stevenson%20141" target="_blank" rel="noopener">Quero esta</a></span></div>
     </div>
   </article>
   <article class="c " data-esp="NFL" data-set="2026 Topps Flagship Football"
-           data-preco="600" data-busca="david bailey 2026 topps flagship football 1991 topps football autograph card 91fra-dba  v03">
+           data-cod="V03" data-preco="600" data-busca="david bailey 2026 topps flagship football 1991 topps football autograph card 91fra-dba  v03">
     <div class="foto" tabindex="0" role="button" aria-label="ver o verso">
       <img class="fr" src="fotos/V03_f.jpg" width="524" height="640" loading="lazy" decoding="async" alt="David Bailey V03"><img class="vs" src="fotos/V03_v.jpg" width="531" height="640" loading="lazy" decoding="async" alt="verso de V03">
       
@@ -126,7 +157,7 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
       <p class="set">2026 Topps Flagship Football</p>
       <p class="det">1991 Topps Football Autograph Card</p>
       <div class="l2"><strong class="preco">R$ 600</strong>
-        <a class="quero" href="https://wa.me/5511982821912?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20carta%20V03%20David%20Bailey%2091FRA-DBA" target="_blank" rel="noopener">Quero esta</a></div>
+        <span class="bts"><button class="add" data-add="V03" aria-pressed="false">adicionar</button><a class="quero" href="https://wa.me/5511982821912?text=Ol%C3%A1%2C%20tenho%20interesse%20na%20carta%20V03%20David%20Bailey%2091FRA-DBA" target="_blank" rel="noopener">Quero esta</a></span></div>
     </div>
   </article>
   <p class="vazio" id="vazio" hidden>Nada com esse filtro.</p>
@@ -135,23 +166,101 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
 <footer>
   <p>Atualizado em 12/10/2026. Preços em reais e podem mudar sem aviso; a carta é de
      quem fechar primeiro.</p>
-  <p>Toque na foto para ver o verso.</p>
+  <p>Toque na foto para ver o verso. Toque em <strong>adicionar</strong> para juntar várias
+     cartas num pedido só.</p>
 </footer>
 <div id="aviso"></div>
+
+<div class="barra" id="barra" hidden>
+  <div class="txt"><span id="qtd"></span><strong class="tot" id="tot"></strong></div>
+  <button class="limpa" id="limpar">limpar</button>
+  <button class="quero" id="enviar">Enviar pedido<span class='amplo'> no WhatsApp</span></button>
+</div>
+
+<script type="application/json" id="dados">[{"cod": "V01", "rot": "V01 Rhamondre Stevenson #141", "preco": 300}, {"cod": "V02", "rot": "V02 Rhamondre Stevenson #141", "preco": 300}, {"cod": "V03", "rot": "V03 David Bailey #91FRA-DBA", "preco": 600}]</script>
 
 <script>
 (function () {
   "use strict";
   var cartoes = [].slice.call(document.querySelectorAll(".c"));
   var q = document.getElementById("q");
+  var NUMERO = "5511982821912";
+  var ITENS = JSON.parse(document.getElementById("dados").textContent);
+  var POR = {}; ITENS.forEach(function (x) { POR[x.cod] = x; });
+  var CHAVE = "vitrine_pedido";
+  var sel = ler();
+
+  /* localStorage pode lancar em janela anonima ou com dados bloqueados, e pode voltar com
+     lixo de uma versao anterior da pagina. Por isso a leitura filtra por POR: codigo que
+     nao esta mais a venda some do pedido sozinho, em vez de virar uma linha fantasma na
+     mensagem do WhatsApp. */
+  function ler() {
+    try {
+      var v = JSON.parse(localStorage.getItem(CHAVE) || "[]");
+      return Array.isArray(v) ? v.filter(function (c) { return POR[c]; }) : [];
+    } catch (e) { return []; }
+  }
+  function gravar() { try { localStorage.setItem(CHAVE, JSON.stringify(sel)); } catch (e) {} }
+  function brl(n) { return "R$ " + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+
+  function pintar() {
+    var total = sel.reduce(function (s, c) { return s + (POR[c] ? POR[c].preco : 0); }, 0);
+    cartoes.forEach(function (el) {
+      var cod = el.dataset.cod, dentro = sel.indexOf(cod) >= 0;
+      el.classList.toggle("sel", dentro);
+      var b = el.querySelector("[data-add]");
+      if (b) { b.textContent = dentro ? "adicionada" : "adicionar";
+                b.setAttribute("aria-pressed", dentro ? "true" : "false"); }
+    });
+    var barra = document.getElementById("barra");
+    barra.hidden = sel.length === 0;
+    document.body.classList.toggle("comBarra", sel.length > 0);
+    document.getElementById("qtd").textContent =
+      sel.length === 1 ? "1 carta" : sel.length + " cartas";
+    document.getElementById("tot").textContent = brl(total);
+  }
+
+  function mensagem() {
+    var total = 0;
+    var linhas = sel.map(function (c) {
+      total += POR[c].preco;
+      return POR[c].rot + " " + brl(POR[c].preco);
+    });
+    /* \n e nao 
+: isto esta dentro de uma f-string do Python, e a quebra de linha de
+       verdade partiria o literal do JavaScript ao meio. Foi o que aconteceu na primeira
+       geracao - "Uncaught SyntaxError: Invalid or unexpected token" e a pagina inteira
+       morta, com os botoes sem reagir. */
+    return "Olá! Tenho interesse nestas cartas:\n" + linhas.join("\n")
+      + "\nTotal: " + brl(total);
+  }
 
   /* Virar a foto: delegado no documento, para funcionar em carta que o filtro escondeu e
      mostrou de novo. Nao usa :hover - no celular nao existe hover. */
   document.addEventListener("click", function (ev) {
-    var f = ev.target.closest && ev.target.closest(".foto");
+    if (!ev.target.closest) return;
+    var add = ev.target.closest("[data-add]");
+    if (add) {
+      var cod = add.getAttribute("data-add");
+      if (!POR[cod]) return;                  // reservada ou vendida: nao entra
+      var i = sel.indexOf(cod);
+      if (i >= 0) sel.splice(i, 1); else sel.push(cod);
+      gravar(); pintar();
+      return;
+    }
+    if (ev.target.closest("#limpar")) { sel = []; gravar(); pintar(); return; }
+    if (ev.target.closest("#enviar")) {
+      if (!sel.length) return;
+      var txt = mensagem();
+      if (NUMERO) {
+        window.open("https://wa.me/" + NUMERO + "?text=" + encodeURIComponent(txt), "_blank");
+      } else { copiar(txt); }
+      return;
+    }
+    var f = ev.target.closest(".foto");
     if (f && f.querySelector(".vs")) { f.classList.toggle("virada"); return; }
-    var b = ev.target.closest && ev.target.closest("button.quero");
-    if (b) { copiar(b.getAttribute("data-msg")); }
+    var b = ev.target.closest("button.quero");
+    if (b && b.id !== "enviar") { copiar(b.getAttribute("data-msg")); }
   });
   document.addEventListener("keydown", function (ev) {
     if (ev.key !== "Enter" && ev.key !== " ") return;
@@ -210,6 +319,7 @@ color:var(--bg);padding:11px 18px;border-radius:999px;font-size:14px;display:non
       document.getElementById(id).addEventListener(ev, filtrar);
     });
   });
+  pintar();
 })();
 </script>
 </body>
